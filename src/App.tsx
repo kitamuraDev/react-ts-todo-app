@@ -11,8 +11,16 @@ const App: VFC = () => {
     setInputValue(e.target.value);
   };
 
-  const handleEditInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+  const handleEditInputValue = (id: number, editTargetTodo: string) => {
+    const newTodo = todo.map((todoItem) => {
+      if (todoItem.id === id) {
+        todoItem.value = editTargetTodo; // eslint-disable-line no-param-reassign
+      }
+
+      return todoItem;
+    });
+
+    setTodo(newTodo);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,7 +55,9 @@ const App: VFC = () => {
             <li key={todoItem.id}>
               <input
                 type='text'
-                onChange={handleEditInputValue}
+                onChange={(e) =>
+                  handleEditInputValue(todoItem.id, e.target.value)
+                }
                 value={todoItem.value}
                 className='inputText'
               />

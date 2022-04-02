@@ -17,7 +17,7 @@
 }
 
 .todoList li {
-  width: 10%;
+  width: 100%;
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -25,4 +25,5 @@
 
 .todoList li input {
   padding: 7px;
+  width: 69%;
 }
