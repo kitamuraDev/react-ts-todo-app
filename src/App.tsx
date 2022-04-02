@@ -1,6 +1,6 @@
 import './App.css';
 
-import { useState, VFC } from 'react';
+import React, { useState, VFC } from 'react';
 import { Todo } from 'types/todoType';
 
 const App: VFC = () => {
@@ -11,12 +11,25 @@ const App: VFC = () => {
     setInputValue(e.target.value);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // ページ遷移しないように（本来行われる挙動をキャンセルさせる）
+
+    // add todo
+    const newTodo: Todo = {
+      id: todo.length,
+      value: inputValue,
+      isDone: false,
+    };
+
+    setTodo([newTodo, ...todo]);
+    setInputValue(''); // 入力エリアの初期化
+  };
+
   return (
     <div className='App'>
       <div>
         <h2 className='title'>Todo App Powered by React TypeScript</h2>
-        {/* eslint-disable */}
-        <form onSubmit={() => {}}>
+        <form onSubmit={handleSubmit}>
           <input
             type='text'
             onChange={handleChangeInputValue}
