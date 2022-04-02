@@ -49,6 +49,11 @@ const App: VFC = () => {
     setTodo(newTodo);
   };
 
+  const handleDelete = (id: number) => {
+    const newTodo = todo.filter((todoItem) => todoItem.id !== id);
+    setTodo(newTodo);
+  };
+
   return (
     <div className='App'>
       <div>
@@ -80,6 +85,9 @@ const App: VFC = () => {
                   handleToggleIsDone(todoItem.id, todoItem.isDone)
                 }
               />
+              <button type='button' onClick={() => handleDelete(todoItem.id)}>
+                削除
+              </button>
             </li>
           ))}
         </ul>
