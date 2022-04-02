@@ -23,7 +23,12 @@
   margin-bottom: 10px;
 }
 
-.todoList li input {
-  padding: 7px;
+.todoList li input[type='text'] {
+  padding: 8px;
   width: 69%;
+}
+
+.todoList li input[type='checkbox'] {
+  padding: 8px;
+  margin-left: 12px
 }

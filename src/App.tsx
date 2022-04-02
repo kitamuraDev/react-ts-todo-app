@@ -37,6 +37,18 @@ const App: VFC = () => {
     setInputValue(''); // 入力エリアの初期化
   };
 
+  const handleToggleIsDone = (id: number, isDone: boolean) => {
+    const newTodo = todo.map((todoItem) => {
+      if (todoItem.id === id) {
+        todoItem.isDone = !isDone; // eslint-disable-line no-param-reassign
+      }
+
+      return todoItem;
+    });
+
+    setTodo(newTodo);
+  };
+
   return (
     <div className='App'>
       <div>
@@ -59,7 +71,14 @@ const App: VFC = () => {
                   handleEditInputValue(todoItem.id, e.target.value)
                 }
                 value={todoItem.value}
+                disabled={todoItem.isDone}
                 className='inputText'
+              />
+              <input
+                type='checkbox'
+                onChange={() =>
+                  handleToggleIsDone(todoItem.id, todoItem.isDone)
+                }
               />
             </li>
           ))}
