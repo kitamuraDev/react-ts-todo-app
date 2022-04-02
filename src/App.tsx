@@ -11,6 +11,10 @@ const App: VFC = () => {
     setInputValue(e.target.value);
   };
 
+  const handleEditInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // ページ遷移しないように（本来行われる挙動をキャンセルさせる）
 
@@ -38,6 +42,18 @@ const App: VFC = () => {
           />
           <input type='submit' value='追加' className='submitButton' />
         </form>
+        <ul className='todoList'>
+          {todo.map((todoItem) => (
+            <li key={todoItem.id}>
+              <input
+                type='text'
+                onChange={handleEditInputValue}
+                value={todoItem.value}
+                className='inputText'
+              />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
