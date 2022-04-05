@@ -30,9 +30,10 @@
 
 .todoList li input[type='checkbox'] {
   padding: 8px;
-  margin-left: 12px
+  margin-right: 12px
 }
 
 .todoList li button {
   margin-left: 12px;
+  margin-bottom: 0.5rem;
 }
