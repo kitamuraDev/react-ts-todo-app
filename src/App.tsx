@@ -4,78 +4,74 @@ import React, { useRef, useState, VFC } from 'react';
 import { Todo } from 'types/todoType';
 
 const App: VFC = () => {
-  const [todo, setTodo] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
   const input = useRef<HTMLInputElement>(null);
 
-  const handleEditInputValue = (id: number, editTargetTodo: string) => {
-    const newTodo = todo.map((todoItem) => {
-      if (todoItem.id === id) {
-        todoItem.value = editTargetTodo; // eslint-disable-line no-param-reassign
+  const handleEditTodoValue = (id: number, editTodo: string) => {
+    const newTodo = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.value = editTodo; // eslint-disable-line no-param-reassign
       }
 
-      return todoItem;
+      return todo;
     });
 
-    setTodo(newTodo);
+    setTodos(newTodo);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // ページ遷移しないように（本来行われる挙動をキャンセルさせる）
 
     if (!input.current?.value.trim()) return; // 空文字, 空白行を含む空文字を許容しない
 
-    setTodo([
-      { id: todo.length, value: input.current.value, isDone: false },
-      ...todo,
+    setTodos([
+      { id: todos.length, value: input.current.value, isDone: false },
+      ...todos,
     ]);
 
     input.current.value = '';
   };
 
   const handleToggleIsDone = (id: number, isDone: boolean) => {
-    const newTodo = todo.map((todoItem) => {
-      if (todoItem.id === id) {
-        todoItem.isDone = !isDone; // eslint-disable-line no-param-reassign
+    const newTodo = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.isDone = !isDone; // eslint-disable-line no-param-reassign
       }
 
-      return todoItem;
+      return todo;
     });
 
-    setTodo(newTodo);
+    setTodos(newTodo);
   };
 
-  const handleDelete = (id: number) => {
-    const newTodo = todo.filter((todoItem) => todoItem.id !== id);
-    setTodo(newTodo);
+  const handleDeleteTodo = (id: number) => {
+    const newTodo = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodo);
   };
 
   return (
     <div className='App'>
       <div>
         <h2 className='title'>Todo App Powered by React TypeScript</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleAddTodo}>
           <input type='text' ref={input} className='inputText' />
           <input type='submit' value='追加' className='submitButton' />
         </form>
         <ul className='todoList'>
-          {todo.map((todoItem) => (
-            <li key={todoItem.id}>
+          {todos.map((todo) => (
+            <li key={todo.id}>
               <input
                 type='checkbox'
-                onChange={() =>
-                  handleToggleIsDone(todoItem.id, todoItem.isDone)
-                }
+                onChange={() => handleToggleIsDone(todo.id, todo.isDone)}
               />
               <input
                 type='text'
-                onChange={(e) =>
-                  handleEditInputValue(todoItem.id, e.target.value)
-                }
-                value={todoItem.value}
-                disabled={todoItem.isDone}
+                onChange={(e) => handleEditTodoValue(todo.id, e.target.value)}
+                value={todo.value}
+                disabled={todo.isDone}
                 className='inputText'
               />
-              <button type='button' onClick={() => handleDelete(todoItem.id)}>
+              <button type='button' onClick={() => handleDeleteTodo(todo.id)}>
                 削除
               </button>
             </li>
