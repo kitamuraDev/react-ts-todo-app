@@ -1,11 +1,15 @@
 import './App.css';
 
-import React, { useRef, useState, VFC } from 'react';
+import React, { useEffect, useRef, useState, VFC } from 'react';
 import { Todo } from 'types/todoType';
 
 const App: VFC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const input = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    input.current?.focus();
+  }, []);
 
   const handleEditTodoValue = (id: number, editTodo: string) => {
     const newTodo = todos.map((todo) => {
@@ -47,6 +51,7 @@ const App: VFC = () => {
   const handleDeleteTodo = (id: number) => {
     const newTodo = todos.filter((todo) => todo.id !== id);
     setTodos(newTodo);
+    input.current?.focus();
   };
 
   return (
