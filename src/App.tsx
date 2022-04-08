@@ -2,6 +2,7 @@ import './App.css';
 
 import React, { useEffect, useRef, useState, VFC } from 'react';
 import { Todo } from 'types/todoType';
+import { v4 as getUniqueId } from 'uuid';
 
 const App: VFC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -11,7 +12,7 @@ const App: VFC = () => {
     input.current?.focus();
   }, []);
 
-  const handleEditTodoValue = (id: number, editTodo: string) => {
+  const handleEditTodoValue = (id: Todo['id'], editTodo: string) => {
     const newTodo = todos.map((todo) => {
       if (todo.id === id) {
         todo.value = editTodo; // eslint-disable-line no-param-reassign
@@ -29,14 +30,18 @@ const App: VFC = () => {
     if (!input.current?.value.trim()) return; // 空文字, 空白行を含む空文字を許容しない
 
     setTodos([
-      { id: todos.length, value: input.current.value, isDone: false },
+      {
+        id: getUniqueId(), // eslint-disable-line
+        value: input.current.value,
+        isDone: false,
+      },
       ...todos,
     ]);
 
     input.current.value = '';
   };
 
-  const handleToggleIsDone = (id: number, isDone: boolean) => {
+  const handleToggleIsDone = (id: Todo['id'], isDone: boolean) => {
     const newTodo = todos.map((todo) => {
       if (todo.id === id) {
         todo.isDone = !isDone; // eslint-disable-line no-param-reassign
@@ -48,7 +53,7 @@ const App: VFC = () => {
     setTodos(newTodo);
   };
 
-  const handleDeleteTodo = (id: number) => {
+  const handleDeleteTodo = (id: Todo['id']) => {
     const newTodo = todos.filter((todo) => todo.id !== id);
     setTodos(newTodo);
     input.current?.focus();
