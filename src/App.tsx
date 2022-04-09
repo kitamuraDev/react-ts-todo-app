@@ -1,6 +1,8 @@
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import React, { useEffect, useRef, useState, VFC } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import { Todo } from 'types/todoType';
 import { v4 as getUniqueId } from 'uuid';
 
@@ -27,17 +29,26 @@ const App: VFC = () => {
   const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // ページ遷移しないように（本来行われる挙動をキャンセルさせる）
 
-    if (!input.current?.value.trim()) return; // 空文字, 空白行を含む空文字を許容しない
+    // 空文字、スペースを含む空文字を許容しない
+    if (!input.current?.value.trim()) {
+      toast.warn('Empty string can not submit');
+
+      return;
+    }
+
+    // XSSを試された場合の警告
+    if (new RegExp('<script>', 'i').test(input.current.value)) {
+      toast.error('Do not trying to XSS');
+
+      return;
+    }
 
     setTodos([
-      {
-        id: getUniqueId(), // eslint-disable-line
-        value: input.current.value,
-        isDone: false,
-      },
+      { id: getUniqueId(), value: input.current.value, isDone: false },
       ...todos,
     ]);
 
+    toast.success('Success, add Todo');
     input.current.value = '';
   };
 
@@ -56,6 +67,7 @@ const App: VFC = () => {
   const handleDeleteTodo = (id: Todo['id']) => {
     const newTodo = todos.filter((todo) => todo.id !== id);
     setTodos(newTodo);
+    toast.success('Success, delete Todo', { icon: '🗑' });
     input.current?.focus();
   };
 
@@ -88,6 +100,8 @@ const App: VFC = () => {
           ))}
         </ul>
       </div>
+
+      <ToastContainer position='bottom-right' autoClose={3000} />
     </div>
   );
 };
