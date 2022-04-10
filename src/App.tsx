@@ -14,7 +14,7 @@ const App: VFC = () => {
     input.current?.focus();
   }, []);
 
-  const handleEditTodoValue = (id: Todo['id'], editTodo: string) => {
+  const handleEditTodoValue = (id: Todo['id'], editTodo: Todo['value']) => {
     const newTodo = todos.map((todo) => {
       if (todo.id === id) {
         todo.value = editTodo; // eslint-disable-line no-param-reassign
@@ -52,7 +52,7 @@ const App: VFC = () => {
     input.current.value = '';
   };
 
-  const handleToggleIsDone = (id: Todo['id'], isDone: boolean) => {
+  const handleToggleIsDone = (id: Todo['id'], isDone: Todo['isDone']) => {
     const newTodo = todos.map((todo) => {
       if (todo.id === id) {
         todo.isDone = !isDone; // eslint-disable-line no-param-reassign
