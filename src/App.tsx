@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import React, { useEffect, useRef, useState, VFC } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { Todo } from 'types/todoType';
+import { Todo } from 'types/todo';
 import { v4 as getUniqueId } from 'uuid';
 
 const App: VFC = () => {
