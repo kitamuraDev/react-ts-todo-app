@@ -18,6 +18,7 @@ const useTodo = () => {
       // 空文字、スペースを含む空文字を許容しない
       if (!input.current?.value.trim()) {
         toast.warn('Empty string can not submit');
+        input.current!.value = ''; // eslint-disable-line @typescript-eslint/no-non-null-assertion
 
         return;
       }
@@ -25,6 +26,7 @@ const useTodo = () => {
       // XSSを試された場合の警告
       if (new RegExp('<script>', 'i').test(input.current.value)) {
         toast.error('Do not trying to XSS');
+        input.current.value = '';
 
         return;
       }
