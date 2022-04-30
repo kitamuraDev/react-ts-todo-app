@@ -1,9 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Todo } from 'types/todo';
+import { Handler, Todo } from 'types/todo';
 import { v4 as getUniqueId } from 'uuid';
 
-const useTodo = () => {
+const useTodo = (): [
+  todos: Todo[],
+  input: React.RefObject<HTMLInputElement>,
+  handler: Handler,
+] => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const input = useRef<HTMLInputElement>(null);
 
@@ -82,14 +86,16 @@ const useTodo = () => {
     [todos],
   );
 
-  return {
+  return [
     todos,
     input,
-    handleAddTodo,
-    handleEditTodoValue,
-    handleToggleIsDone,
-    handleDeleteTodo,
-  };
+    {
+      handleAddTodo,
+      handleEditTodoValue,
+      handleToggleIsDone,
+      handleDeleteTodo,
+    },
+  ];
 };
 
 export default useTodo;

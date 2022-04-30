@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-handler-names */
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,27 +9,18 @@ import { VFC } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 const App: VFC = () => {
-  const {
-    todos,
-    input,
-    handleAddTodo,
-    handleEditTodoValue,
-    handleToggleIsDone,
-    handleDeleteTodo,
-  } = useTodo();
+  const [todos, input, handler] = useTodo();
 
   return (
     <div className='App'>
       <div>
         <h2 className='title'>Todo App Powered by React TypeScript</h2>
-        <TodoForm {...{ handleAddTodo, input }} />
+        <TodoForm handleAddTodo={handler.handleAddTodo} input={input} />
         <TodoItem
-          {...{
-            todos,
-            handleEditTodoValue,
-            handleToggleIsDone,
-            handleDeleteTodo,
-          }}
+          todos={todos}
+          handleEditTodoValue={handler.handleEditTodoValue}
+          handleToggleIsDone={handler.handleToggleIsDone}
+          handleDeleteTodo={handler.handleDeleteTodo}
         />
       </div>
 
