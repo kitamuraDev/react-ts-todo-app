@@ -49,11 +49,10 @@ const useTodo = (): [
   const handleEditTodoValue = useCallback(
     (id: Todo['id'], editTodo: Todo['value']) => {
       const newTodo = todos.map((todo) => {
-        if (todo.id === id) {
-          todo.value = editTodo; // eslint-disable-line no-param-reassign
-        }
+        const cpTodo = todo;
+        if (todo.id === id) cpTodo.value = editTodo;
 
-        return todo;
+        return cpTodo;
       });
 
       setTodos(newTodo);
@@ -64,11 +63,10 @@ const useTodo = (): [
   const handleToggleIsDone = useCallback(
     (id: Todo['id'], isDone: Todo['isDone']) => {
       const newTodo = todos.map((todo) => {
-        if (todo.id === id) {
-          todo.isDone = !isDone; // eslint-disable-line no-param-reassign
-        }
+        const cpTodo = todo;
+        if (todo.id === id) cpTodo.isDone = !isDone;
 
-        return todo;
+        return cpTodo;
       });
 
       setTodos(newTodo);
