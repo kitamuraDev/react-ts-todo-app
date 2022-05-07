@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+
 import { toast } from 'react-toastify';
-import { Handler, Todo } from 'types/todo';
 import { v4 as getUniqueId } from 'uuid';
+
+import { Handler, Todo } from 'types/todo';
 
 const useTodo = (): [
   todos: Todo[],

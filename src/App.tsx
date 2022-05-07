@@ -1,12 +1,13 @@
-/* eslint-disable react/jsx-handler-names */
-import './App.css';
-import 'react-toastify/dist/ReactToastify.css';
+import { VFC } from 'react';
+
+import { ToastContainer } from 'react-toastify';
 
 import TodoForm from 'components/TodoForm';
 import TodoItem from 'components/TodoItem';
 import useTodo from 'hooks/use-todo';
-import { VFC } from 'react';
-import { ToastContainer } from 'react-toastify';
+
+import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App: VFC = () => {
   const [todos, input, handler] = useTodo();

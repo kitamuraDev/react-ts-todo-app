@@ -12,8 +12,6 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb',
     'airbnb/hooks',
-    'plugin:import/errors',
-    'plugin:import/warnings',
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
@@ -23,11 +21,12 @@ module.exports = {
     '@typescript-eslint',
     'react',
     'react-hooks',
-    'import',
-    'simple-import-sort',
     'jsx-a11y',
+    'import',
+    'unused-imports',
   ],
   rules: {
+    /** basics */
     'prefer-const': 'error',
     'prefer-arrow-callback': 'error',
     'func-style': ['error', 'expression'],
@@ -40,7 +39,8 @@ module.exports = {
         next: 'return',
       },
     ],
-    // jsx-a11y
+
+    /** jsx-a11y */
     'jsx-a11y/no-autofocus': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
@@ -50,26 +50,39 @@ module.exports = {
         aspects: ['invalidHref', 'preferButton'],
       },
     ],
-    // import
-    'import/newline-after-import': 'error',
+
+    /** import */
+    'import/extensions': 'off',
     'import/no-duplicates': 'error',
-    'import/extensions': [
+    'unused-imports/no-unused-imports': 'error',
+    'import/order': [
       'error',
-      'ignorePackages',
       {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          ['parent', 'sibling'],
+          'object',
+          'index',
+          // 'type', // type imports がない場合にエラーが発生するためコメントアウト
+        ],
+        pathGroups: [
+          {
+            pattern: '{react,react-dom/**,react-router-dom}',
+            group: 'builtin',
+            position: 'before',
+          },
+        ],
+        'newlines-between': 'always',
+        pathGroupsExcludedImportTypes: ['builtin'],
+        alphabetize: { order: 'asc', caseInsensitive: true },
       },
     ],
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
-    'no-use-before-define': 'off', // react-scripts 4.0.3の環境下では'off'にしないと'import React from react'でエラーになる
-    // @typescript-eslint
-    '@typescript-eslint/no-use-before-define': ['error'],
+
+    /** @typescript-eslint */
+    '@typescript-eslint/no-use-before-define': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -84,28 +97,13 @@ module.exports = {
       'error',
       { selector: ['typeAlias', 'typeParameter'], format: ['PascalCase'] },
       { selector: ['property', 'method'], format: ['camelCase'] },
-      {
-        selector: 'variable',
-        types: ['boolean'],
-        format: ['PascalCase'],
-        prefix: ['no', 'is', 'has', 'should'],
-        filter: { regex: '^_', match: false },
-      },
     ],
-    // react
+
+    /** react */
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
-    'react/destructuring-assignment': ['error', 'never'],
+    'react/destructuring-assignment': 'error',
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
-    'react/jsx-handler-names': [
-      'error',
-      {
-        eventHandlerPrefix: 'handle',
-        eventHandlerPropPrefix: 'on',
-        checkLocalVariables: true,
-        checkInlineFunction: true,
-      },
-    ],
     'react/jsx-props-no-spreading': [
       'error',
       {
