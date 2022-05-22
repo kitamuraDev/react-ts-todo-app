@@ -6,7 +6,6 @@ import TodoForm from 'components/TodoForm';
 import TodoItem from 'components/TodoItem';
 import useTodo from 'hooks/use-todo';
 
-import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App: VFC = () => {
