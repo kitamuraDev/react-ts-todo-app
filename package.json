@@ -2,6 +2,7 @@
   "name": "react-ts-todo-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kitamuraDev.github.io/react-ts-todo-app/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
